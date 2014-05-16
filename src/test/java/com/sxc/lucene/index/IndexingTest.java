@@ -41,11 +41,11 @@ import org.apache.lucene.util.Version;
 // From chapter 2
 public class IndexingTest extends TestCase {
 	protected String[] ids = { "1", "2", "3", "4" };
-	protected String[] unindexed = { "Netherlands", "Italy", "中国", "中国" };
+	protected String[] unindexed = { "Netherlands", "Italy", "中国1", "中国2" };
 	protected String[] unstored = { "Amsterdam has lots of bridges",
 			"Venice has lots of canals", 
-			"北京市有很多人",
-			"我家在如皋市"};
+			"北京有很多人，如皋很少",
+			"如皋很美"};
 	protected String[] text = { "Amsterdam", "Venice", "北京市", "如皋市" };
 
 	private Directory directory;
