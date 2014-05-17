@@ -35,7 +35,8 @@ public class AnalyzerDemo {
   private static final String[] examples = {
     "The quick brown fox jumped over the lazy dog",
     "XY&Z Corporation - xyz@example.com",
-    "北京市 如皋市"
+    "Amsterdam Venice",
+    "北京 南通"
   };
 
   private static final Analyzer[] analyzers = new Analyzer[] { 

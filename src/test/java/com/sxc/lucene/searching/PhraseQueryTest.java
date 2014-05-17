@@ -27,6 +27,7 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PhraseQuery;
@@ -45,6 +46,7 @@ public class PhraseQueryTest extends TestCase {
 				.open(new File("D:/programming/lucene/PhraseQueryTest"));
 		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47,
 				new SmartChineseAnalyzer(Version.LUCENE_47));
+		config.setOpenMode(OpenMode.CREATE);
 		IndexWriter writer = new IndexWriter(dir, config);
 
 		Document doc = new Document();
@@ -83,7 +85,7 @@ public class PhraseQueryTest extends TestCase {
 
 		assertFalse("exact phrase not found", matched(phrase, 0));
 
-		assertTrue("close enough", matched(phrase, 1));
+		assertTrue("close enough", matched(phrase, 2));
 	}
 
 	public void testReverse() throws Exception {

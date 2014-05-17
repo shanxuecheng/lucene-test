@@ -19,7 +19,7 @@ import org.apache.lucene.util.Version;
 public class Explainer {
 	public static void main(String[] args) throws Exception {
 		String indexDir = "D:/programming/lucene/indexingTest";
-		String queryExpression = "北京 如皋";
+		String queryExpression = "北京 南通";
 
 		Directory directory = FSDirectory.open(new File(indexDir));
 

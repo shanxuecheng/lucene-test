@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 import lia.common.TestUtil;
 
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -44,9 +45,9 @@ public class IndexingTest extends TestCase {
 	protected String[] unindexed = { "Netherlands", "Italy", "中国1", "中国2" };
 	protected String[] unstored = { "Amsterdam has lots of bridges",
 			"Venice has lots of canals", 
-			"北京有很多人，如皋很少",
-			"如皋很美"};
-	protected String[] text = { "Amsterdam", "Venice", "北京市", "如皋市" };
+			"北京有很多人，南通没有",
+			"江苏南通"};
+	protected String[] text = { "Amsterdam", "Venice", "北京", "南通" };
 
 	private Directory directory;
 
