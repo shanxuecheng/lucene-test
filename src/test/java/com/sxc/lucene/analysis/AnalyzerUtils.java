@@ -146,7 +146,7 @@ public class AnalyzerUtils {
 			String[] output) throws Exception {
 		TokenStream stream = analyzer.tokenStream("field", new StringReader(
 				input));
-
+		stream.reset();
 		CharTermAttribute termAttr = stream.addAttribute(CharTermAttribute.class);
 		for (String expected : output) {
 			Assert.assertTrue(stream.incrementToken());
