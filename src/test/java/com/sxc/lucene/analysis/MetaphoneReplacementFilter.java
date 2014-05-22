@@ -27,6 +27,7 @@ public class MetaphoneReplacementFilter extends TokenFilter {
 			return false;
 		String encoded;
 		encoded = metaphoner.encode(termAttr.toString());
+		termAttr.setEmpty();
 		termAttr.append(encoded);
 		typeAttr.setType(METAPHONE);
 		return true;
