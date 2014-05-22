@@ -36,14 +36,17 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 public class AnalyzerDemo extends TestCase {
 	private static final String[] examples = {
 			"The quick brown fox jumped over the lazy dog",
-			"XY&Z Corporation - xyz@example.com", "Amsterdam Venice", "北京 南通市" };
+			"XY&Z Corporation - xyz@example.com", 
+			"Amsterdam Venice", 
+			"北京 南通市" };
 
 	private static final Analyzer[] analyzers = new Analyzer[] {
 			new WhitespaceAnalyzer(Version.LUCENE_47),
 			new SimpleAnalyzer(Version.LUCENE_47),
 			new StopAnalyzer(Version.LUCENE_47),
 			new StandardAnalyzer(Version.LUCENE_47),
-			new SmartChineseAnalyzer(Version.LUCENE_47), new IKAnalyzer() };
+			new SmartChineseAnalyzer(Version.LUCENE_47), 
+			new IKAnalyzer() };
 
 	public static void main(String[] args) throws IOException {
 
