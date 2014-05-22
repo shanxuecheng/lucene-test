@@ -25,6 +25,17 @@ import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
@@ -36,17 +47,14 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 public class AnalyzerDemo extends TestCase {
 	private static final String[] examples = {
 			"The quick brown fox jumped over the lazy dog",
-			"XY&Z Corporation - xyz@example.com", 
-			"Amsterdam Venice", 
-			"北京 南通市" };
+			"XY&Z Corporation - xyz@example.com", "Amsterdam Venice", "北京 南通市" };
 
 	private static final Analyzer[] analyzers = new Analyzer[] {
 			new WhitespaceAnalyzer(Version.LUCENE_47),
 			new SimpleAnalyzer(Version.LUCENE_47),
 			new StopAnalyzer(Version.LUCENE_47),
 			new StandardAnalyzer(Version.LUCENE_47),
-			new SmartChineseAnalyzer(Version.LUCENE_47), 
-			new IKAnalyzer() };
+			new SmartChineseAnalyzer(Version.LUCENE_47), new IKAnalyzer() };
 
 	public static void main(String[] args) throws IOException {
 
@@ -79,6 +87,37 @@ public class AnalyzerDemo extends TestCase {
 	public void testStopAnalyzerFlawed() throws Exception {
 		AnalyzerUtils.assertAnalyzesTo(new StopAnalyzerFlawed(),
 				"The quick brown...", new String[] { "the", "quick", "brown" });
+	}
+
+	public void testKoolKat() throws Exception {
+		RAMDirectory directory = new RAMDirectory();
+		Analyzer analyzer = new MetaphoneReplacementAnalyzer();
+		IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+				Version.LUCENE_47, analyzer);
+		IndexWriter writer = new IndexWriter(directory, indexWriterConfig);
+		Document doc = new Document();
+		doc.add(new TextField("contents", "cool cat", Field.Store.YES));
+		writer.addDocument(doc);
+		writer.close();
+		IndexSearcher searcher = new IndexSearcher(
+				DirectoryReader.open(directory));
+		Query query = new QueryParser(Version.LUCENE_47, "contents", analyzer)
+				.parse("kool kat");
+		TopDocs hits = searcher.search(query, 1);
+		assertEquals(1, hits.totalHits);
+		int docID = hits.scoreDocs[0].doc;
+		doc = searcher.doc(docID);
+		assertEquals("cool cat", doc.get("contents"));
+		searcher.getIndexReader().close();
+	}
+
+	public void testMetaphoneReplacement() throws IOException {
+		MetaphoneReplacementAnalyzer analyzer = new MetaphoneReplacementAnalyzer();
+		AnalyzerUtils.displayTokens(analyzer,
+				"The quick brown fox jumped over the lazy dog");
+		System.out.println("");
+		AnalyzerUtils.displayTokens(analyzer,
+				"Tha quik brown phox jumpd ovvar tha lazi dag");
 	}
 }
 
