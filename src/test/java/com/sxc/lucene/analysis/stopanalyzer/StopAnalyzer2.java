@@ -1,4 +1,4 @@
-package com.sxc.lucene.analysis;
+package com.sxc.lucene.analysis.stopanalyzer;
 
 import java.io.Reader;
 

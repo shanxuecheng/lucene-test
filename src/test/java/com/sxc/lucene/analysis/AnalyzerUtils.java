@@ -88,6 +88,7 @@ public class AnalyzerUtils {
 
 		TokenStream stream = analyzer.tokenStream("contents", new StringReader(
 				text));
+		stream.reset();
 		CharTermAttribute term = stream.addAttribute(CharTermAttribute.class);
 		PositionIncrementAttribute posIncr = stream
 				.addAttribute(PositionIncrementAttribute.class);
@@ -103,6 +104,7 @@ public class AnalyzerUtils {
 
 			System.out.print("[" + term + "] ");
 		}
+		stream.close();
 		System.out.println();
 	}
 
@@ -111,6 +113,7 @@ public class AnalyzerUtils {
 
 		TokenStream stream = analyzer.tokenStream("contents", // #A
 				new StringReader(text));
+		stream.reset();
 
 		CharTermAttribute term = stream.addAttribute(CharTermAttribute.class); // #B
 		PositionIncrementAttribute posIncr = // #B
@@ -134,6 +137,7 @@ public class AnalyzerUtils {
 					offset.endOffset() + ":" + // #E
 					type.type() + "] "); // #E
 		}
+		stream.close();
 		System.out.println();
 	}
 
@@ -160,11 +164,13 @@ public class AnalyzerUtils {
 			throws IOException {
 		TokenStream stream = analyzer.tokenStream("contents", new StringReader(
 				text));
+		stream.reset();
 		PositionIncrementAttribute posIncr = stream
 				.addAttribute(PositionIncrementAttribute.class);
 		while (stream.incrementToken()) {
 			System.out.println("posIncr=" + posIncr.getPositionIncrement());
 		}
+		stream.close();
 	}
 
 	public static void main(String[] args) throws IOException {
