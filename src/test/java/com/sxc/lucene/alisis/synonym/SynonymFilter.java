@@ -48,6 +48,7 @@ public class SynonymFilter extends TokenFilter {
     if (synonymStack.size() > 0) {                          //#2
       String syn = synonymStack.pop();                      //#2
       restoreState(current);                                //#2
+      termAtt.setEmpty();
       termAtt.append(syn);
       posIncrAtt.setPositionIncrement(0);                   //#3
       return true;

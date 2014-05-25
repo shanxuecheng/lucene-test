@@ -68,6 +68,7 @@ public class SynonymAnalyzerTest extends TestCase {
     TokenStream stream =
       synonymAnalyzer.tokenStream("contents",                   // #A
                                   new StringReader("jumps"));   // #A
+    stream.reset();
     CharTermAttribute term = stream.addAttribute(CharTermAttribute.class);
     PositionIncrementAttribute posIncr = stream.addAttribute(PositionIncrementAttribute.class);
 
@@ -88,6 +89,7 @@ public class SynonymAnalyzerTest extends TestCase {
                    posIncr.getPositionIncrement());  // #C
       i++;
     }
+    stream.close();
     assertEquals(3, i);
   }
 
