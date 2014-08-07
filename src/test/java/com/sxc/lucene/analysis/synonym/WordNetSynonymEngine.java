@@ -1,4 +1,4 @@
-package com.sxc.lucene.alisis.synonym;
+package com.sxc.lucene.analysis.synonym;
 
 /**
  * Copyright Manning Publications Co.
